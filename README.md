@@ -25,6 +25,7 @@ The calculation of a control's opening time is based on the maximum speed. Calcu
 
 
 Distance, Speed, and Time Calculation:
+
 When a distance in kilometers is divided by a speed in kilometers per hour, the result is a time measured in hours. For example, a distance of 100 km divided by a speed of 15 km per hour results in a time of 6.666666... hours. To convert that figure into hours and minutes, subtract the whole number of hours (6) and multiply the resulting fractional part by 60. The result is 6 hours, 40 minutes, expressed here as 6H40.
 
 If the control distance in kilometers is greater than the nominal distance of the brevet and if the control distance in kilometers is smaller than or equal to 120% of the nominal distance of the brevet, then the control distance in kilometers is equal to the nominal distance of the brevet. Otherwise, the control distance is too big.
