@@ -15,14 +15,9 @@ checkpoints.
 
 The table below gives the minimum and maximum speeds for ACP brevets.
 
-
-Control location (km)	Minimum Speed (km/hr)	Maximum Speed (km/hr)
-0 - 200                 15	                    34
-200 - 400	            15	                    32
-400 - 600	            15	                    30
-600 - 1000	            11.428	                28
-1000 - 1300	            13.333	                26
-
+Control location (km): 0-200, 200-400, 400-600, 600-1000, 1000-1300	
+Minimum Speed (km/hr): 15,    15,      15,      11.428,   13.333
+Maximum Speed (km/hr): 34,    32,      30,      28,       26
 
 The calculation of a control's opening time is based on the maximum speed. Calculation of a control's closing time is based on the minimum speed.
 
