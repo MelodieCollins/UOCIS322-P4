@@ -7,3 +7,4 @@ WORKDIR /app
 RUN pip install -r requirements.txt
 ENTRYPOINT ["python"]
 CMD ["flask_brevets.py"]
+RUN python test_times.py

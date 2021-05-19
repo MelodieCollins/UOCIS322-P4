@@ -11,6 +11,7 @@ import acp_times  # Brevet time calculations
 import config
 
 import logging
+from werkzeug.exceptions import HTTPException
 
 ###
 # Globals
@@ -35,7 +36,19 @@ def page_not_found(error):
     app.logger.debug("Page not found")
     return flask.render_template('404.html'), 404
 
-
+@app.errorhandler(HTTPException)
+def handle_exception(e):
+    """Return JSON instead of HTML for HTTP errors."""
+    # start with the correct headers and status code from the error
+    response = e.get_response()
+    # replace the body with JSON
+    response.data = json.dumps({
+        "code": e.code,
+        "name": e.name,
+        "description": e.description,
+    })
+    response.content_type = "application/json"
+    return response
 ###############
 #
 # AJAX request handlers
@@ -64,8 +77,8 @@ def _calc_times():
     # open_time = acp_times.open_time(km, 200, arrow.now().isoformat).format('YYYY-MM-DDTHH:mm')
     # close_time = acp_times.close_time(km, 200, arrow.now().isoformat).format('YYYY-MM-DDTHH:mm')
     
-    open_time = acp_times.open_time(km, brevet, arrow.get(start).format('YYYY-MM-DDTHH:mm')
-    close_time = acp_times.close_time(km, brevet, start).format('YYYY-MM-DDTHH:mm')
+    open_time = acp_times.open_time(km, brevet, arrow.get(start, 'YYYY-MM-DDTHH:mm')).format('YYYY-MM-DDTHH:mm')
+    close_time = acp_times.close_time(km, brevet, arrow.get(start, 'YYYY-MM-DDTHH:mm')).format('YYYY-MM-DDTHH:mm')
     result = {"open": open_time, "close": close_time}
     return flask.jsonify(result=result)
 

@@ -5,7 +5,7 @@ following rules described at https://rusa.org/octime_alg.html
 and https://rusa.org/pages/rulesForRiders
 """
 import arrow
-
+import math
 
 #  You MUST provide the following two functions
 #  with these signatures. You must keep
@@ -40,28 +40,29 @@ def open_time(control_dist_km, brevet_dist_km, brevet_start_time):
 
     # open_time = max_time * distance
     hours = 0.0
-    intervals = {
-      200: 34,
-      400-200: 32,
-      600-400: 30,
-      1000-600: 28,
-      1300-1000: 26,
-    }
+    intervals = [
+      [200, 34],
+      [400-200, 32],
+      [600-400, 30],
+      [1000-600, 28],
+      [1300-1000, 26],
+    ]
 
     if control_dist_km > brevet_dist_km:
       if control_dist_km <= (brevet_dist_km + (brevet_dist_km*0.2)):
         control_dist_km = brevet_dist_km
-      else
+      else:
         return -1
 
-    for interval, max_speed in intervals:
+    for pair in intervals:
+      interval, max_speed = pair
       if control_dist_km <= 0:
         break
       dist = min(control_dist_km, interval) 
       hours += dist / max_speed
       control_dist_km -= interval
 
-    mins = (hours - int(hours)) * 60
+    mins = math.ceil((hours - int(hours)) * 60.0)
     result = brevet_start_time.shift(hours = int(hours), minutes = mins)
     return result
 
@@ -85,7 +86,7 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
     if control_dist_km > brevet_dist_km:
       if control_dist_km <= (brevet_dist_km + (brevet_dist_km*0.2)):
         control_dist_km = brevet_dist_km
-      else
+      else:
         return -1
 
     if control_dist_km == brevet_dist_km:
@@ -120,20 +121,21 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
 
     else:
 
-      intervals = {
-        200: 15,
-        400-200: 15,
-        600-400: 15,
-        1000-600: 11.428,
-        1300-1000: 13.333,
-      }
-      for interval, min_speed in intervals:
+      intervals = [
+        [200, 15],
+        [400-200, 15],
+        [600-400, 15],
+        [1000-600, 11.428],
+        [1300-1000, 13.333],
+      ]
+      for pair in intervals:
+        interval, min_speed = pair
         if control_dist_km <= 0:
           break
         dist = min(control_dist_km, interval)
         hours += dist / min_speed
         control_dist_km -= interval
 
-    mins = (hours - int(hours)) * 60
+    mins = math.floor((hours - int(hours)) * 60.0)
     result = brevet_start_time.shift(hours = int(hours), minutes = mins)
     return result
