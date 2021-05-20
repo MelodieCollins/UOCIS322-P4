@@ -5,6 +5,7 @@ RUN apt-get install -y python-pip python-dev build-essential
 COPY . /app
 WORKDIR /app
 RUN pip install -r requirements.txt
+RUN chmod 755 run_tests.sh
+RUN ./run_tests.sh
 ENTRYPOINT ["python"]
 CMD ["flask_brevets.py"]
-RUN python test_times.py

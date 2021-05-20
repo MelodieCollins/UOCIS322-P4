@@ -136,6 +136,6 @@ def close_time(control_dist_km, brevet_dist_km, brevet_start_time):
         hours += dist / min_speed
         control_dist_km -= interval
 
-    mins = math.floor((hours - int(hours)) * 60.0)
+    mins = math.ceil((hours - int(hours)) * 60.0)
     result = brevet_start_time.shift(hours = int(hours), minutes = mins)
     return result
